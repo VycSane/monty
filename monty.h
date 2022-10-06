@@ -34,7 +34,6 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-
 void check_arg_count(int argc, int test_value, char *msg);
 FILE *open_file(char *filepath, char *mode);
 
@@ -47,4 +46,5 @@ void pall(stack_t **stack, __attribute((unused)) unsigned int line_number);
 void parse_and_execute(stack_t **s, char **tokens, size_t line_number);
 void search_and_execute(stack_t **s, char *opcode, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
 #endif /* MONTY_H */

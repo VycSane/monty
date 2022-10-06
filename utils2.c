@@ -42,14 +42,14 @@ void parse_and_execute(stack_t **s, char **tokens, size_t line_number)
 void search_and_execute(stack_t **s, char *opcode, unsigned int line_number)
 {
 	size_t i = 0;
-	instruction_t commands[2];
+	instruction_t commands[3];
 	char *name_table[] = {
-		"pall", "pint", NULL};
+		"pall", "pint", "pop", NULL};
 	typedef void (*FunctionCallback)(stack_t(**stack), unsigned int line_number);
 	FunctionCallback(functions_table)[] = {
-		pall, pint, NULL};
+		pall, pint, pop, NULL};
 
-	while (i < 2)
+	while (name_table[i] != NULL)
 	{
 		commands[i].opcode = name_table[i];
 		commands[i].f = functions_table[i];
@@ -79,8 +79,29 @@ void pint(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL)
 	{
-		fprintf(stderr, "L<%d>: can't pint, stack empty\n", line_number);
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+	printf("%d\n", (*stack)->n);
+}
+
+/**
+ * pop - pos the top of the stack
+ * @stack: the stack
+ * @line_number: Current executing line
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	tmp = *stack;
+	*stack = (*stack)->next;
+	free(tmp);
 	printf("%d\n", (*stack)->n);
 }

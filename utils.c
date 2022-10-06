@@ -73,7 +73,7 @@ char **str_av(char *str, char *delimiter)
 	av = malloc((count + 1) * sizeof(char *));
 	if (av == NULL)
 	{
-		perror("Error");
+		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 	for (curr_pos = 0; curr_pos <= str_len; curr_pos++)
@@ -85,7 +85,7 @@ char **str_av(char *str, char *delimiter)
 			temp_str = malloc((stop_pos - start_pos + 1) * sizeof(char));
 			if (temp_str == NULL)
 			{
-				perror("Error");
+				fprintf(stderr, "Error: malloc failed\n");
 				exit(EXIT_FAILURE);
 			}
 			while (start_pos < stop_pos)

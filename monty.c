@@ -9,9 +9,9 @@
 int main(int argc, __attribute((unused)) char *argv[])
 {
 	char *filepath = NULL, line[1024], *status;
-	char *delim = " \n", **tokens;
+	char *delim = " \n	", **tokens;
 	FILE *stream = NULL;
-	size_t line_number = 1;
+	unsigned int line_number = 1, i = 0;
 	stack_t *stack = NULL;
 
 	check_arg_count(argc, 2, "USAGE: monty file\n");
@@ -27,6 +27,12 @@ int main(int argc, __attribute((unused)) char *argv[])
 		parse_and_execute(&stack, tokens, line_number);
 
 		line_number++;
+		while (tokens[i] != NULL)
+		{
+			free(tokens[i]);
+			i++;
+		}
+		free(tokens);
 	}
 	fclose(stream);
 	return (0);
