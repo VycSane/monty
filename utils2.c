@@ -33,13 +33,19 @@ void parse_and_execute(stack_t **s, char **tokens, size_t line_number)
 	}
 }
 
+/**
+ * search_and_execute - parses and executes the bytecodes per line
+ * @s: the stack
+ * @opcode: the opcode to lookup
+ * @line_number: Current executing line
+ */
 void search_and_execute(stack_t **s, char *opcode, unsigned int line_number)
 {
 	size_t i = 0;
 	instruction_t commands[2];
 	char *name_table[] = {
 		"pall", "pint", NULL};
-	typedef void (*FunctionCallback)(stack_t * *stack, unsigned int line_number);
+	typedef void (*FunctionCallback)(stack_t(**stack), unsigned int line_number);
 	FunctionCallback(functions_table)[] = {
 		pall, pint, NULL};
 
@@ -55,6 +61,7 @@ void search_and_execute(stack_t **s, char *opcode, unsigned int line_number)
 		if (strcmp(name_table[i], opcode) == 0)
 		{
 			commands[i].f(s, line_number);
+			return;
 		}
 		i++;
 	}
@@ -62,6 +69,11 @@ void search_and_execute(stack_t **s, char *opcode, unsigned int line_number)
 	exit(EXIT_FAILURE);
 }
 
+/**
+ * pint - prints the value on top of the stack
+ * @stack: the stack
+ * @line_number: Current executing line
+ */
 void pint(stack_t **stack, unsigned int line_number)
 {
 
