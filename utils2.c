@@ -7,7 +7,7 @@
  */
 void parse_and_execute(stack_t **s, char **tokens, size_t line_number)
 {
-	char *opcode, *num_str;
+	char *opcode, *num_str = NULL;
 
 	opcode = tokens[0];
 
@@ -66,7 +66,7 @@ void search_and_execute(stack_t **s, char *opcode, unsigned int line_number)
 		}
 		i++;
 	}
-	fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 	exit(EXIT_FAILURE);
 }
 

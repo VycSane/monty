@@ -9,7 +9,7 @@
 int main(int argc, __attribute((unused)) char *argv[])
 {
 	char *filepath = NULL, line[1024], *status;
-	char *delim = " \n	", **tokens;
+	char *delim = " \n", **tokens;
 	FILE *stream = NULL;
 	unsigned int line_number = 1, i = 0;
 	stack_t *stack = NULL;
@@ -22,7 +22,10 @@ int main(int argc, __attribute((unused)) char *argv[])
 	while ((status = fgets(line, 1024, stream)))
 	{
 		if (is_comment(line) || line[0] == '\n')
+		{
+			line_number++;
 			continue;
+		}
 		tokens = str_av(line, delim);
 		parse_and_execute(&stack, tokens, line_number);
 
